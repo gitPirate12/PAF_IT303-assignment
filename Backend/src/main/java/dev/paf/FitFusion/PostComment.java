@@ -1,11 +1,11 @@
-package dev.paf.FitFusion;
+// package dev.paf.FitFusion;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+// import lombok.Data;
+// import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-public class PostComment {
-    private String userId; 
-    private String text; 
-}
+// @Data
+// @NoArgsConstructor
+// public class PostComment {
+//     private String userId; 
+//     private String text; 
+// }
