@@ -10,6 +10,8 @@ import dev.paf.FitFusion.Models.PostComment;
 import dev.paf.FitFusion.Models.SocialMediaPost;
 import dev.paf.FitFusion.Services.PostCommentService;
 import dev.paf.FitFusion.Services.SocialMediaPostService;
+import java.util.ArrayList;
+
 
 import java.util.List;
 import java.util.Map;
@@ -52,9 +54,15 @@ public ResponseEntity<PostComment> createComment(@RequestBody Map<String, String
     Optional<SocialMediaPost> optionalPost = socialMediaPostService.getSinglePost(new ObjectId(postId));
     if (optionalPost.isPresent()) {
         SocialMediaPost post = optionalPost.get();
-        // Add the newly created comment ID to the comments array of the fetched post
+        
+        // Initialize comments list if it's null
+        if (post.getComments() == null) {
+            post.setComments(new ArrayList<>());
+        }
+
+        // Add the newly created comment to the comments array of the fetched post
         PostComment newComment = postCommentService.createComment(postId, userId, text);
-        post.getComments().add(newComment); // Add the comment object
+        post.getComments().add(newComment);
 
         // Retrieve comment IDs from the list of PostComment objects
         List<String> commentIds = post.getComments().stream()
