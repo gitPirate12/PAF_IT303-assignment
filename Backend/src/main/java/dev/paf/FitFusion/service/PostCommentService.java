@@ -1,11 +1,11 @@
-package dev.paf.FitFusion.Services;
+package dev.paf.FitFusion.service;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.paf.FitFusion.Models.PostComment;
-import dev.paf.FitFusion.Repositories.PostCommentRepository;
+import dev.paf.FitFusion.model.PostComment;
+import dev.paf.FitFusion.repository.PostCommentRepository;
 
 import java.util.List;
 import java.util.Optional;

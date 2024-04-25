@@ -1,13 +1,13 @@
-package dev.paf.FitFusion.Services;
+package dev.paf.FitFusion.service;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.paf.FitFusion.Models.SocialMediaPost;
-import dev.paf.FitFusion.Models.PostComment;
-import dev.paf.FitFusion.Repositories.SocialMediaPostRepository;
+import dev.paf.FitFusion.model.PostComment;
+import dev.paf.FitFusion.model.SocialMediaPost;
+import dev.paf.FitFusion.repository.SocialMediaPostRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;

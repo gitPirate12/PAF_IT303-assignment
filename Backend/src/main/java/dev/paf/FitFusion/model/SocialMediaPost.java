@@ -1,4 +1,4 @@
-package dev.paf.FitFusion.Models;
+package dev.paf.FitFusion.model;
 
 import org.bson.types.ObjectId; // Import ObjectId from org.bson.types
 import org.springframework.data.annotation.Id;

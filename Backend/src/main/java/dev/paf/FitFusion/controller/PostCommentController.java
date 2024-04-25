@@ -1,4 +1,4 @@
-package dev.paf.FitFusion.Controllers;
+package dev.paf.FitFusion.controller;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,10 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import dev.paf.FitFusion.Models.PostComment;
-import dev.paf.FitFusion.Models.SocialMediaPost;
-import dev.paf.FitFusion.Services.PostCommentService;
-import dev.paf.FitFusion.Services.SocialMediaPostService;
+import dev.paf.FitFusion.model.PostComment;
+import dev.paf.FitFusion.model.SocialMediaPost;
+import dev.paf.FitFusion.service.PostCommentService;
+import dev.paf.FitFusion.service.SocialMediaPostService;
+
 import java.util.ArrayList;
 
 
