@@ -9,7 +9,7 @@ public class FitFusionApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FitFusionApplication.class, args);}
-	
+
 	
 	}
 
