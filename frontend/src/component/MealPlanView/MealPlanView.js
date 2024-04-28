@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const MealPlanView = ({ plan }) => {
+const MealPlanView = ({ mealPlanId }) => {
+  const [mealPlan, setMealPlan] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMealPlan = async () => {
+      try {
+        const res = await axios.get(`/api/mealplans/${mealPlanId}`);
+        setMealPlan(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching meal plan:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchMealPlan();
+  }, [mealPlanId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!mealPlan) {
+    return <div>Meal plan not found</div>;
+  }
+
   return (
     <div>
-      <h4>{plan.name}</h4>
-      <p>Description: {plan.description}</p>
-      <p>Recipes:</p>
-      <ul>
-        {plan.recipes.map((recipe, index) => (
-          <li key={index}>{recipe}</li>
-        ))}
-      </ul>
-      <p>Ingredients:</p>
-      <ul>
-        {plan.ingredients.map((ingredient, index) => (
-          <li key={index}>{ingredient}</li>
-        ))}
-      </ul>
-      <p>Cooking Instructions:</p>
-      <ul>
-        {plan.cookingInstructions.map((instruction, index) => (
-          <li key={index}>{instruction}</li>
-        ))}
-      </ul>
-      <p>Nutritional Information: {plan.nutritionalInformation}</p>
-      <p>Dietary Preferences: {plan.dietaryPreferences}</p>
-      <img src={plan.imageUrl} alt={plan.name} style={{ maxWidth: '300px' }} />
+      <h2>{mealPlan.name}</h2>
+      <img src={mealPlan.imageUrl} alt={mealPlan.name} style={{ maxWidth: '100%' }} />
+      <p>Description: {mealPlan.description}</p>
+      {/* Display other meal plan details */}
     </div>
   );
 };

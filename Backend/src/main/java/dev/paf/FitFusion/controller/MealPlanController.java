@@ -69,32 +69,34 @@ public class MealPlanController {
     }
 
     // save image
-    private String saveImage(byte[] imageData) {
-        try {
-            String directoryPath = "/path/to/save/images/"; // Update the path as needed
-    
-            // Create the directory if it doesn't exist
-            File directory = new File(directoryPath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-    
-            String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
+private String saveImage(byte[] imageData) {
+    try {
+        String directoryPath = "/path/to/save/images/"; // Update the path as needed
 
-    
-            // Define the file path
-            String imagePath = directoryPath + fileName;
-    
-            FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
-            image_data_to_the_file.write(imageData);
-            image_data_to_the_file.close();
-    
-            return "/images/" + fileName; // actual path
-        } catch (IOException e) {
-            e.printStackTrace(); 
-            return "Error saving image. Please try again."; 
+        // Create the directory if it doesn't exist
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
         }
+
+        String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
+
+        // Define the file path
+        String imagePath = directoryPath + fileName;
+
+        FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
+        image_data_to_the_file.write(imageData);
+        image_data_to_the_file.close();
+
+        // Append a cache-busting query parameter (timestamp) to the image URL
+        long timestamp = System.currentTimeMillis();
+        return "/images/" + fileName + "?v=" + timestamp;
+    } catch (IOException e) {
+        e.printStackTrace();
+        return "Error saving image. Please try again.";
     }
+}
+
 
 
     @PutMapping("/{id}")
