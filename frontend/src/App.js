@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from './component/Navbar/Navbar';
 //create Mealplan
 import MealPlanForm from './component/CreateMealplan/MealPlanForm';
+//View mealplan
+import MealPlanView from './component/MealPlanView/MealPlanView';
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
 
       <Routes>
         <Route path='/createmeal' element={<MealPlanForm />} />
+        <Route path='/viewmealplan' element={<MealPlanView />} />
       </Routes>
     </div>
    </Router>
