@@ -54,11 +54,11 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/community"
+                to="/viewPost"
                 className={`nav-link ${activeLink === "Community" ? "active" : ""}`}
                 onClick={() => handleLinkClick("Community")}
               >
-                Community
+                ViewPost
               </Link>
             </li>
           </ul>
