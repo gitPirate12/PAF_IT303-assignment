@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/postComment")
+@CrossOrigin(origins = "*")
 public class PostCommentController {
 
     @Autowired
