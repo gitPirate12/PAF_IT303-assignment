@@ -1,11 +1,22 @@
 import './App.css';
 
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+//Nav bar
+import Navbar from './component/Navbar/Navbar';
+
 function App() {
   return (
-    <div className="App">
-      <h1>Hellow PAF</h1>
-      
+
+   <Router>
+    <div>
+      { <Navbar/> }
     </div>
+   </Router>
+
+    
+   
+  
   );
 }
 
