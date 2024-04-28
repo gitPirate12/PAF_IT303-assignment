@@ -3,7 +3,8 @@ import './App.css';
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import AddPost from './components/SocialMediaPosts/addPost';
+
+import ViewPost from './components/SocialMediaPosts/viewPost';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <div>
       
         <Routes>
-        <Route path='/addPost' element={<AddPost />} />
+        <Route path='/viewPost' element={<ViewPost />} />
           
         </Routes>
       </div>
