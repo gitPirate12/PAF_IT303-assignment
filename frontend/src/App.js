@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/development
+
+
+
 import './App.css';
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -11,8 +11,6 @@ import ViewPost from './components/SocialMediaPosts/viewPost';
 
 function App() {
   return (
-<<<<<<< HEAD
- 
 
   <Router>
       <div>
@@ -24,14 +22,8 @@ function App() {
       </div>
       
 
-    </Router>
-    
-=======
-    <div className="App">
-      <h1>Hellow PAF</h1>
-      
-    </div>
->>>>>>> origin/development
+    </Router>  
+
   );
 }
 
