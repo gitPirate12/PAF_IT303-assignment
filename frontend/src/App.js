@@ -1,17 +1,14 @@
-
 import './App.css';
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import ViewPost from './components/SocialMediaPosts/viewPost';//post
 
-//Nav bar
-import Navbar from './component/Navbar/Navbar';
-//create Mealplan
-import MealPlanForm from './component/CreateMealplan/MealPlanForm';
-//View mealplan
-import FetchMealPlans from './component/FetchMealPlans/FetchMealPlans';
-//Update meal plan
-import MealPlanUpdate from './component/MealPlanUpdate/MealPlanUpdate';
+
+import Navbar from './component/Navbar/Navbar';//Nav bar
+import MealPlanForm from './component/CreateMealplan/MealPlanForm';//create Mealplan
+import FetchMealPlans from './component/FetchMealPlans/FetchMealPlans';//View mealplan
+import MealPlanUpdate from './component/MealPlanUpdate/MealPlanUpdate';//Update meal plan
+
 function App() {
   return (
 
@@ -24,6 +21,9 @@ function App() {
         <Route path='/viewmealplan' element={<FetchMealPlans />} />
         <Route path='/updatemealplan' element={<MealPlanUpdate />} />
 
+        <Route path='/viewPost' element={<ViewPost />} />
+
+
       </Routes>
     </div>
    </Router>
@@ -31,23 +31,8 @@ function App() {
     
    
   
-import ViewPost from './components/SocialMediaPosts/viewPost';
 
-function App() {
-  return (
- 
 
-  <Router>
-      <div>
-      
-        <Routes>
-        <Route path='/viewPost' element={<ViewPost />} />
-          
-        </Routes>
-      </div>
-      
-
-    </Router>
     
 
   );

@@ -22,8 +22,7 @@ public class MealPlan {
     private List<String> cookingInstructions;
     private String nutritionalInformation;
     private String dietaryPreferences;
-    // private String imageUrl; // Store image path instead of byte array
-
+    private String imageUrl; // Store relative image path instead of byte array
 
     @Field("image")
     private byte[] image;
