@@ -31,8 +31,7 @@ function ViewPost() {
     const renderComments = (comments) => {
         return comments.map((comment) => (
             <div key={comment.id}>
-                <p>{comment.text}</p>
-                <p>By: {comment.userId}</p>
+                <p>{comment.userId}: {comment.text}</p>
             </div>
         ));
     };
@@ -68,7 +67,6 @@ function ViewPost() {
             <div className='viewPost'>
                 {posts.map((post) => (
                     <div key={post._id}>
-                        <p>{post.postDescription}</p>
                         <Slider {...sliderSettings}>
                             {/* Render images */}
                             {post.postImages.map((image, index) => (
@@ -86,6 +84,7 @@ function ViewPost() {
                                 </div>
                             ))}
                         </Slider>
+                        <p>{post.postDescription}</p> {/* Description below the slider */}
                         {/* Render buttons for like and comment below the slider */}
                         <div className="actionButtons">
                             <button onClick={() => handleLike(post._id)}>Like</button>
