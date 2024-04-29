@@ -4,6 +4,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import './viewPostStyle.css';
 
+import likeIcon from './postIcons/heart.svg';
+import commentIcon from './postIcons/message-circle.svg';
+
 function ViewPost() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -17,7 +20,12 @@ function ViewPost() {
                     throw new Error('Failed to fetch posts');
                 }
                 const data = await res.json();
-                setPosts(data);
+                // Initialize the like count for each post
+                const postsWithLikes = data.map(post => ({
+                    ...post,
+                    likeCount: parseInt(localStorage.getItem(`likeCount_${post.id}`)) || 0
+                }));
+                setPosts(postsWithLikes);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -37,8 +45,23 @@ function ViewPost() {
     };
 
     const handleLike = (postId) => {
-        // Implement like functionality
-        console.log('Liked post with ID:', postId);
+        // Find the post by id
+        const likedPostIndex = posts.findIndex(post => post.id === postId);
+        if (likedPostIndex === -1) {
+            console.error('Post not found');
+            return;
+        }
+
+        // Update the like count for the liked post
+        const updatedPosts = [...posts];
+        updatedPosts[likedPostIndex] = {
+            ...updatedPosts[likedPostIndex],
+            likeCount: updatedPosts[likedPostIndex].likeCount + 1
+        };
+        setPosts(updatedPosts);
+
+        // Store the updated like count in localStorage
+        localStorage.setItem(`likeCount_${postId}`, updatedPosts[likedPostIndex].likeCount.toString());
     };
 
     const handleComment = (postId) => {
@@ -84,12 +107,19 @@ function ViewPost() {
                                 </div>
                             ))}
                         </Slider>
-                        <p>{post.postDescription}</p> {/* Description below the slider */}
-                        {/* Render buttons for like and comment below the slider */}
                         <div className="actionButtons">
-                            <button onClick={() => handleLike(post._id)}>Like</button>
-                            <button onClick={() => handleComment(post._id)}>Comment</button>
+                            {/* Render buttons for like and comment below the slider */}
+                            <button onClick={() => handleLike(post.id)}>
+                                <img src={likeIcon} alt="Like" />
+                            </button>
+                            <button onClick={() => handleComment(post._id)}>
+                                <img src={commentIcon} alt="Comment" />
+                            </button>
                         </div>
+
+                        <p style={{ marginTop: '-5px' }}>{post.likeCount} likes</p> {/* Like count below the slider */}
+                        <p>{post.postDescription}</p> {/* Description below the slider */}
+                        
                         {/* Render comments */}
                         {post.comments && renderComments(post.comments)}
                     </div>

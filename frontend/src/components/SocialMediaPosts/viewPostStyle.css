@@ -62,5 +62,20 @@
 }
 
 .actionButtons button {
-    margin-right: 5px; /* Add space between the buttons */
+    margin-right: 10px; /* Add space between the buttons */
+    background: none; /* Remove background color */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    outline: none; /* Remove outline when clicked */
+}
+
+/* Light gray hover effect for icon images */
+.actionButtons button img {
+    border: 1px solid transparent; /* Add transparent border to the icon */
+    transition: border-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.actionButtons button img:hover {
+    border-color: #ccc; /* Light gray border color on hover */
 }
