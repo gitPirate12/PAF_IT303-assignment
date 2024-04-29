@@ -42,7 +42,7 @@ public class SocialMediaPostController {
             @RequestParam("postImages") List<MultipartFile> postImages,
             @RequestParam("postVideos") List<MultipartFile> postVideos,
             @RequestParam(name = "comments", required = false) List<PostComment> comments,
-            @RequestParam(name = "likes", required = false) List<String> likes) {
+            @RequestParam(name = "likes", required = false) int likes) {
 
                 // Extracting IDs from PostComment objects
                 List<String> commentIds = comments.stream()
@@ -61,7 +61,7 @@ public class SocialMediaPostController {
             @RequestParam("postImages") List<MultipartFile> postImages,
             @RequestParam("postVideos") List<MultipartFile> postVideos,
             @RequestParam(name = "comments", required = false) List<PostComment> comments,
-            @RequestParam(name = "likes", required = false) List<String> likes) {
+            @RequestParam(name = "likes", required = false) int likes) {
     
         // Convert MultipartFiles to byte arrays
         List<byte[]> imageBytes = postImages.stream()
@@ -94,6 +94,18 @@ public class SocialMediaPostController {
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
     
+
+    @PostMapping("/{id}/like")
+public ResponseEntity<SocialMediaPost> likePost(@PathVariable ObjectId id) {
+    SocialMediaPost likedPost = socialMediaPostService.likePost(id);
+    if (likedPost != null) {
+        return new ResponseEntity<>(likedPost, HttpStatus.OK);
+    } else {
+        // Handle if post not found
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+}
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable ObjectId id) {
