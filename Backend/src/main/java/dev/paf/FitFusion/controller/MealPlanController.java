@@ -1,26 +1,17 @@
 package dev.paf.FitFusion.controller;
 
+import dev.paf.FitFusion.model.MealPlan;
+import dev.paf.FitFusion.service.MealPlanService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import dev.paf.FitFusion.model.MealPlan;
-import dev.paf.FitFusion.service.MealPlanService;
 
 @RestController
 @RequestMapping("api/mealplans")
@@ -29,15 +20,19 @@ public class MealPlanController {
     @Autowired
     private MealPlanService mealPlanService;
 
-
     @GetMapping
     public List<MealPlan> getAllMealPlans() {
         return mealPlanService.getAllMealPlans();
     }
 
     @GetMapping("/{id}")
-    public MealPlan getMealPlanById(@PathVariable String id) {
-        return mealPlanService.getMealPlanById(id);
+    public ResponseEntity<MealPlan> getMealPlanById(@PathVariable String id) {
+        MealPlan mealPlan = mealPlanService.getMealPlanById(id);
+        if (mealPlan != null) {
+            return new ResponseEntity<>(mealPlan, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
@@ -53,7 +48,7 @@ public class MealPlanController {
             byte[] imageData = file.getBytes();
             String imageUrl = saveImage(imageData); // Save image and get its URL
             MealPlan mealPlan = new MealPlan();
-            mealPlan.setImageUrl(imageUrl);
+            mealPlan.setImage(imageData); // Set the image data
             mealPlan.setName(name);
             mealPlan.setDescription(description);
             mealPlan.setRecipes(recipes);
@@ -69,39 +64,36 @@ public class MealPlanController {
     }
 
     // save image
-private String saveImage(byte[] imageData) {
-    try {
-        String directoryPath = "/path/to/save/images/"; // Update the path as needed
+    private String saveImage(byte[] imageData) {
+        try {
+            String directoryPath = "/path/to/save/images/"; // Update the path as needed
 
-        // Create the directory if it doesn't exist
-        File directory = new File(directoryPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
+            // Create the directory if it doesn't exist
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
+
+            // Define the file path
+            String imagePath = directoryPath + fileName;
+
+            FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
+            image_data_to_the_file.write(imageData);
+            image_data_to_the_file.close();
+
+            // Append a cache-busting query parameter (timestamp) to the image URL
+            long timestamp = System.currentTimeMillis();
+            return "/images/" + fileName + "?v=" + timestamp;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error saving image. Please try again.";
         }
-
-        String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
-
-        // Define the file path
-        String imagePath = directoryPath + fileName;
-
-        FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
-        image_data_to_the_file.write(imageData);
-        image_data_to_the_file.close();
-
-        // Append a cache-busting query parameter (timestamp) to the image URL
-        long timestamp = System.currentTimeMillis();
-        return "/images/" + fileName + "?v=" + timestamp;
-    } catch (IOException e) {
-        e.printStackTrace();
-        return "Error saving image. Please try again.";
     }
-}
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMealPlan(@PathVariable String id,
-                                            
                                             @RequestParam(value = "name", required = false) String name,
                                             @RequestParam(value = "description", required = false) String description,
                                             @RequestParam(value = "recipes", required = false) List<String> recipes,
@@ -115,13 +107,13 @@ private String saveImage(byte[] imageData) {
             if (existingMealPlan == null) {
                 return new ResponseEntity<>("Meal plan not found", HttpStatus.NOT_FOUND);
             }
-    
+
             // Check if any field is being updated
             boolean isUpdated = false;
             if (file != null && !file.isEmpty()) {
                 byte[] imageData = file.getBytes();
                 String imageUrl = saveImage(imageData); // Save image and get its URL
-                existingMealPlan.setImageUrl(imageUrl);
+                existingMealPlan.setImage(imageData); // Set the image data
                 isUpdated = true;
             }
             if (name != null) {
@@ -152,7 +144,7 @@ private String saveImage(byte[] imageData) {
                 existingMealPlan.setDietaryPreferences(dietaryPreferences);
                 isUpdated = true;
             }
-    
+
             if (isUpdated) {
                 MealPlan updatedMealPlan = mealPlanService.updateMealPlan(id, existingMealPlan); // Pass both ID and updated meal plan
                 return new ResponseEntity<>(updatedMealPlan, HttpStatus.OK);
@@ -163,15 +155,8 @@ private String saveImage(byte[] imageData) {
             return new ResponseEntity<>("Failed to update meal plan: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    
-    
 
-
-
-
-
-
-    //Delete Meal PLan
+    // Delete Meal Plan
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMealPlan(@PathVariable String id) {
         try {
@@ -181,8 +166,4 @@ private String saveImage(byte[] imageData) {
             return new ResponseEntity<>("Failed to delete meal plan: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-    
 }
