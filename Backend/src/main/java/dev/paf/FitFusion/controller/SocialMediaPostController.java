@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/socialMediaPost")
-@CrossOrigin(origins = "*")
+
 public class SocialMediaPostController {
 
     @Autowired
