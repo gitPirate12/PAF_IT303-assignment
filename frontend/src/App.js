@@ -1,12 +1,10 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-<<<<<<< HEAD
 import ViewPost from './components/SocialMediaPosts/viewPost';
 
-=======
+
 import ViewPost from './components/SocialMediaPosts/viewPost';//post
->>>>>>> feature/heshan.s/meal-plan-management
 
 
 import Navbar from './component/Navbar/Navbar';//Nav bar
@@ -26,10 +24,7 @@ function App() {
         <Route path='/viewmealplan' element={<FetchMealPlans />} />
         <Route path='/updatemealplan' element={<MealPlanUpdate />} />
 
-<<<<<<< HEAD
 
-=======
->>>>>>> feature/heshan.s/meal-plan-management
         <Route path='/viewPost' element={<ViewPost />} />
 
 
@@ -43,13 +38,8 @@ function App() {
    
   
 
-<<<<<<< HEAD
-=======
 
     
 
-  );
-}
->>>>>>> feature/heshan.s/meal-plan-management
 
 export default App;
