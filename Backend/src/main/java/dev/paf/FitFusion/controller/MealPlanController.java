@@ -65,6 +65,35 @@ public class MealPlanController {
         }
     }
 
+    // save image
+    private String saveImage(byte[] imageData) {
+        try {
+            String directoryPath = "/path/to/save/images/"; // Update the path as needed
+    
+            // Create the directory if it doesn't exist
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+    
+            String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
+
+    
+            // Define the file path
+            String imagePath = directoryPath + fileName;
+    
+            FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
+            image_data_to_the_file.write(imageData);
+            image_data_to_the_file.close();
+    
+            return "/images/" + fileName; // actual path
+        } catch (IOException e) {
+            e.printStackTrace(); 
+            return "Error saving image. Please try again."; 
+        }
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMealPlan(@PathVariable String id,
                                             @RequestParam(value = "name", required = false) String name,
@@ -137,34 +166,6 @@ public class MealPlanController {
             return new ResponseEntity<>("Meal plan deleted successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to delete meal plan: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // save image
-    private String saveImage(byte[] imageData) {
-        try {
-            String directoryPath = "Backend\\src\\main\\resources\\static\\images"; // Update the path as needed
-
-            // Create the directory if it doesn't exist
-            File directory = new File(directoryPath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-
-            String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
-
-            // Define the file path
-            String imagePath = directoryPath + fileName;
-
-            FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
-            image_data_to_the_file.write(imageData);
-            image_data_to_the_file.close();
-
-            // Return the relative image URL
-            return "/images/" + fileName;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Error saving image. Please try again.";
         }
     }
 }

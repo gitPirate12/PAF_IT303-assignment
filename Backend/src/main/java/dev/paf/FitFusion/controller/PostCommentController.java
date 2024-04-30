@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/postComment")
-@CrossOrigin(origins = "*")
 public class PostCommentController {
 
     @Autowired
@@ -73,7 +72,7 @@ public ResponseEntity<PostComment> createComment(@RequestBody Map<String, String
 
         // Update the post in the database by passing the updated post object
         socialMediaPostService.updatePost(post.getId(), post.getPostDescription(), post.getPostImages(),
-                                           post.getPostVideos(), commentIds, post.getLikes());
+                                           post.getPostVideos(), commentIds, post.getLikeCount());
     }
 
     return ResponseEntity.status(HttpStatus.CREATED).body(comment);
