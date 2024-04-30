@@ -1,51 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './FetchMealPlans.css'; // Import CSS file
 
-function MealPlanView() {
+function MealPlanList() {
   const [mealPlans, setMealPlans] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchMealPlans() {
+    const fetchMealPlans = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/mealplans');
         setMealPlans(response.data);
-        setLoading(false);
       } catch (error) {
-        setError('Failed to fetch meal plans');
-        setLoading(false);
+        console.error('Error fetching meal plans:', error);
       }
-    }
-
+    };
     fetchMealPlans();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div>
-      <h2>All Meal Plans</h2>
+    <div className="mealPlansContainer">
+      <h1>Meal Plans</h1>
       {mealPlans.map((mealPlan) => (
-        <div key={mealPlan.id}>
-          <h3>{mealPlan.name}</h3>
+        <div key={mealPlan.id} className="mealPlanBox">
+          <h2>{mealPlan.name}</h2>
           <p>Description: {mealPlan.description}</p>
           <p>Recipes: {mealPlan.recipes.join(', ')}</p>
           <p>Ingredients: {mealPlan.ingredients.join(', ')}</p>
           <p>Cooking Instructions: {mealPlan.cookingInstructions.join(', ')}</p>
           <p>Nutritional Information: {mealPlan.nutritionalInformation}</p>
           <p>Dietary Preferences: {mealPlan.dietaryPreferences}</p>
-          {mealPlan.imageUrl && <img src={`http://localhost:8080${mealPlan.imageUrl}`} alt={mealPlan.name} style={{ maxWidth: '200px' }} />}
+          <img src={`data:image/jpeg;base64,${mealPlan.image}`} alt={mealPlan.name} />
         </div>
       ))}
     </div>
   );
 }
 
-export default MealPlanView;
+export default MealPlanList;

@@ -8,11 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/mealplans")
@@ -47,10 +44,8 @@ public class MealPlanController {
                                             @RequestParam("file") MultipartFile file) {
         try {
             byte[] imageData = file.getBytes();
-            String imageUrl = saveImage(imageData); // Save image and get its URL
             MealPlan mealPlan = new MealPlan();
-            mealPlan.setImage(imageData); // Set the image data
-            mealPlan.setImageUrl(imageUrl); // Set the image URL
+            mealPlan.setImage(imageData); // Set the image data directly
             mealPlan.setName(name);
             mealPlan.setDescription(description);
             mealPlan.setRecipes(recipes);
@@ -64,35 +59,6 @@ public class MealPlanController {
             return new ResponseEntity<>("Failed to create meal plan: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
-    // save image
-    private String saveImage(byte[] imageData) {
-        try {
-            String directoryPath = "/path/to/save/images/"; // Update the path as needed
-    
-            // Create the directory if it doesn't exist
-            File directory = new File(directoryPath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-    
-            String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
-
-    
-            // Define the file path
-            String imagePath = directoryPath + fileName;
-    
-            FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
-            image_data_to_the_file.write(imageData);
-            image_data_to_the_file.close();
-    
-            return "/images/" + fileName; // actual path
-        } catch (IOException e) {
-            e.printStackTrace(); 
-            return "Error saving image. Please try again."; 
-        }
-    }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMealPlan(@PathVariable String id,
@@ -114,9 +80,7 @@ public class MealPlanController {
             boolean isUpdated = false;
             if (file != null && !file.isEmpty()) {
                 byte[] imageData = file.getBytes();
-                String imageUrl = saveImage(imageData); // Save image and get its URL
                 existingMealPlan.setImage(imageData); // Set the image data
-                existingMealPlan.setImageUrl(imageUrl); // Update the image URL
                 isUpdated = true;
             }
             if (name != null) {
