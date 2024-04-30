@@ -79,7 +79,4 @@ public class SocialMediaPost {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-
-    
-    
 }
