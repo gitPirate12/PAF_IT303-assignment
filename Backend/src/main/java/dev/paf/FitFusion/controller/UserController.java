@@ -9,14 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import dev.paf.FitFusion.model.User;
@@ -29,14 +22,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/{id}")
-    public User getMealPlanById(@PathVariable String id) {
-        return userService.getUserDetailsById(id);
+    public ResponseEntity<User> getUserDetailsById(@PathVariable String id) {
+        User user = userService.getUserDetailsById(id);
+        return ResponseEntity.ok().body(user);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok().body(users);
     }
 
     @PostMapping
-    public ResponseEntity<?> createMealPlan(@RequestParam("name") String name,
+    public ResponseEntity<User> createUser(@RequestParam("name") String name,
                                             @RequestParam("address") String address,
                                             @RequestParam("phone") List<String> phone,
                                             @RequestParam("password") String password,
@@ -44,8 +44,7 @@ public class UserController {
                                             @RequestParam("age") String age,
                                             @RequestParam("file") MultipartFile file) {
         try {
-            byte[] imageData = file.getBytes();
-            String imageUrl = saveImage(imageData); // Save image and get its URL
+            String imageUrl = saveImage(file.getBytes());
             User user = new User();
             user.setImageUrl(imageUrl);
             user.setName(name);
@@ -54,114 +53,39 @@ public class UserController {
             user.setPassword(password);
             user.setEmail(email);
             user.setAge(age);
-            User createdAccount = userService.createUserAccount(user);
-            return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+            User createdUser = userService.createUserAccount(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
         } catch (IOException e) {
-            return new ResponseEntity<>("Failed to create meal plan: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    // save image
-    private String saveImage(byte[] imageData) {
-        try {
-            String directoryPath = "/path/to/save/images/"; // Update the path as needed
-    
-            // Create the directory if it doesn't exist
-            File directory = new File(directoryPath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-    
-            String fileName = UUID.randomUUID().toString() + ".jpg";// Generate a unique filename for the image
-
-    
-            // Define the file path
-            String imagePath = directoryPath + fileName;
-    
-            FileOutputStream image_data_to_the_file = new FileOutputStream(imagePath);
-            image_data_to_the_file.write(imageData);
-            image_data_to_the_file.close();
-    
-            return "/images/" + fileName; // actual path
-        } catch (IOException e) {
-            e.printStackTrace(); 
-            return "Error saving image. Please try again."; 
-        }
-    }
-
+    // save image method
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id,
-                                            
-                                            @RequestParam(value = "name", required = false) String name,
-                                            @RequestParam(value = "address", required = false) String address,
-                                            @RequestParam(value = "phone", required = false) List<String> phone,
-                                            @RequestParam(value = "password", required = false )String password,
-                                            @RequestParam(value = "email", required = false) String email,
-                                            @RequestParam(value = "age", required = false) String age,
-                                            @RequestParam(value = "file", required = false) MultipartFile file) {
-        try {
-            User existingUserDetails = userService.getUserDetailsById(id);
-            if (existingUserDetails == null) {
-                return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
-            }
-    
-            // Check if any field is being updated
-            boolean isUpdated = false;
-            if (file != null && !file.isEmpty()) {
-                byte[] imageData = file.getBytes();
-                String imageUrl = saveImage(imageData); // Save image and get its URL
-                existingUserDetails.setImageUrl(imageUrl);
-                isUpdated = true;
-            }
-            if (name != null) {
-                existingUserDetails.setName(name);
-                isUpdated = true;
-            }
-            if (address != null) {
-                existingUserDetails.setAddress(address);
-                isUpdated = true;
-            }
-            if (phone != null) {
-                existingUserDetails.setPhone(phone);;
-                isUpdated = true;
-            }
-            if (password != null) {
-                existingUserDetails.setPassword(password);
-                isUpdated = true;
-            }
-            if (email != null) {
-                existingUserDetails.setEmail(email);
-                isUpdated = true;
-            }
-            if (age != null) {
-                existingUserDetails.setAge(age);
-                isUpdated = true;
-            }
-    
-            if (isUpdated) {
-                User updateUserDetails = userService.updateUserDetails(id, existingUserDetails); // Pass both ID and updated meal plan
-                return new ResponseEntity<>(updateUserDetails, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No fields provided for update", HttpStatus.BAD_REQUEST);
-            }
-        } catch (IOException e) {
-            return new ResponseEntity<>("Failed to update meal plan: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<User> updateUser(@PathVariable String id,
+                                            @RequestBody User userDetails) {
+        User updatedUser = userService.updateUserDetails(id, userDetails);
+        return ResponseEntity.ok().body(updatedUser);
     }
-    
-    //Delete Meal PLan
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserDetails(@PathVariable String id) {
-        try {
-            userService.deleteUserDetails(id);
-            return new ResponseEntity<>("Meal plan deleted successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to delete meal plan: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
+        userService.deleteUserDetails(id);
+        return ResponseEntity.ok().build();
     }
 
-
-
-    
+    private String saveImage(byte[] imageData) throws IOException {
+        String directoryPath = "/path/to/save/images/";
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = UUID.randomUUID().toString() + ".jpg";
+        String imagePath = directoryPath + fileName;
+        try (FileOutputStream imageOutputStream = new FileOutputStream(imagePath)) {
+            imageOutputStream.write(imageData);
+        }
+        return "/images/" + fileName;
+    }
 }
