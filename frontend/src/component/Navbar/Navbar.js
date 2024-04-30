@@ -36,11 +36,11 @@ function Navbar() {
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                to="/Rash_fade"
+                to="/viewmealplan"
                 className={`nav-link ${activeLink === "World Translator" ? "active" : ""}`}
                 onClick={() => handleLinkClick("World Translator")}
               >
-                World Translator
+                Mealplan
               </Link>
             </li>
             <li className="nav-item">

@@ -1,56 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const MealPlanView = ({ match }) => {
-  const [mealPlan, setMealPlan] = useState(null);
+function MealPlanView() {
+  const [mealPlans, setMealPlans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMealPlan = async () => {
+    async function fetchMealPlans() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/mealplans`);
-        setMealPlan(response.data);
+        const response = await axios.get('http://localhost:8080/api/mealplans');
+        setMealPlans(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching meal plan:', error);
+        setError('Failed to fetch meal plans');
+        setLoading(false);
       }
-    };
+    }
 
-    fetchMealPlan();
-  }, [match.params.id]);
+    fetchMealPlans();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div>
-      <h2>Meal Plan Details</h2>
-      <h4>{mealPlan.name}</h4>
-      <p>Description: {mealPlan.description}</p>
-      <p>Recipes:</p>
-      <ul>
-        {mealPlan.recipes && mealPlan.recipes.map((recipe, index) => (
-          <li key={index}>{recipe}</li>
-        ))}
-      </ul>
-      <p>Ingredients:</p>
-      <ul>
-        {mealPlan.ingredients && mealPlan.ingredients.map((ingredient, index) => (
-          <li key={index}>{ingredient}</li>
-        ))}
-      </ul>
-      <p>Cooking Instructions:</p>
-      <ul>
-        {mealPlan.cookingInstructions && mealPlan.cookingInstructions.map((instruction, index) => (
-          <li key={index}>{instruction}</li>
-        ))}
-      </ul>
-      <p>Nutritional Information: {mealPlan.nutritionalInformation}</p>
-      <p>Dietary Preferences: {mealPlan.dietaryPreferences}</p>
-      <img src={mealPlan.imageUrl} alt={mealPlan.name} style={{ maxWidth: '300px' }} />
+      <h2>All Meal Plans</h2>
+      {mealPlans.map((mealPlan) => (
+        <div key={mealPlan.id}>
+          <h3>{mealPlan.name}</h3>
+          <p>Description: {mealPlan.description}</p>
+          <p>Recipes: {mealPlan.recipes.join(', ')}</p>
+          <p>Ingredients: {mealPlan.ingredients.join(', ')}</p>
+          <p>Cooking Instructions: {mealPlan.cookingInstructions.join(', ')}</p>
+          <p>Nutritional Information: {mealPlan.nutritionalInformation}</p>
+          <p>Dietary Preferences: {mealPlan.dietaryPreferences}</p>
+          {mealPlan.imageUrl && <img src={`http://localhost:8080${mealPlan.imageUrl}`} alt={mealPlan.name} style={{ maxWidth: '200px' }} />}
+        </div>
+      ))}
     </div>
   );
-};
+}
 
 export default MealPlanView;

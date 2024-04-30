@@ -2,99 +2,105 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function MealPlanForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    recipes: '',
-    ingredients: '',
-    cookingInstructions: '',
-    nutritionalInformation: '',
-    dietaryPreferences: '',
-    file: null
-  });
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [cookingInstructions, setCookingInstructions] = useState([]);
+  const [nutritionalInformation, setNutritionalInformation] = useState('');
+  const [dietaryPreferences, setDietaryPreferences] = useState('');
+  const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, file: e.target.files[0] });
+    setFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('recipes', JSON.stringify(recipes));
+    formData.append('ingredients', JSON.stringify(ingredients));
+    formData.append('cookingInstructions', JSON.stringify(cookingInstructions));
+    formData.append('nutritionalInformation', nutritionalInformation);
+    formData.append('dietaryPreferences', dietaryPreferences);
+    formData.append('file', file);
+
     try {
-      const formDataObj = new FormData();
-      for (let key in formData) {
-        formDataObj.append(key, formData[key]);
-      }
-      await axios.post('http://localhost:8080/api/mealplans', formDataObj, {
+      const response = await axios.post('http://localhost:8080/api/mealplans', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      alert('Meal plan created successfully!');
-      // Reset form data after successful submission
-      setFormData({
-        name: '',
-        description: '',
-        recipes: '',
-        ingredients: '',
-        cookingInstructions: '',
-        nutritionalInformation: '',
-        dietaryPreferences: '',
-        file: null
-      });
+      setSuccessMessage('Meal plan created successfully!');
+      // Clear form fields after successful submission
+      setName('');
+      setDescription('');
+      setRecipes([]);
+      setIngredients([]);
+      setCookingInstructions([]);
+      setNutritionalInformation('');
+      setDietaryPreferences('');
+      setFile(null);
       setError(null);
     } catch (error) {
-      console.error('Error creating meal plan:', error);
-      setError('Error creating meal plan. Please try again.');
+      setError('Failed to create meal plan');
     }
   };
 
   return (
     <div>
       <h2>Create Meal Plan</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Recipes:</label>
-          <textarea name="recipes" value={formData.recipes} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Ingredients:</label>
-          <textarea name="ingredients" value={formData.ingredients} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Cooking Instructions:</label>
-          <textarea name="cookingInstructions" value={formData.cookingInstructions} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Nutritional Information:</label>
-          <textarea name="nutritionalInformation" value={formData.nutritionalInformation} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Dietary Preferences:</label>
-          <input type="text" name="dietaryPreferences" value={formData.dietaryPreferences} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Image:</label>
-          <input type="file" name="file" onChange={handleFileChange} required />
-        </div>
-        <button type="submit">Create</button>
+        <label>Name:</label>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+        <br />
+        <label>Description:</label>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+        <br />
+        <label>Recipes:</label>
+        <input type="text" value={recipes} onChange={(e) => setRecipes(e.target.value.split(','))} />
+        <br />
+        <label>Ingredients:</label>
+        <input type="text" value={ingredients} onChange={(e) => setIngredients(e.target.value.split(','))} />
+        <br />
+        <label>Cooking Instructions:</label>
+        <input
+          type="text"
+          value={cookingInstructions}
+          onChange={(e) => setCookingInstructions(e.target.value.split(','))}
+        />
+        <br />
+        <label>Nutritional Information:</label>
+        <input
+          type="text"
+          value={nutritionalInformation}
+          onChange={(e) => setNutritionalInformation(e.target.value)}
+          required
+        />
+        <br />
+        <label>Dietary Preferences:</label>
+        <input
+          type="text"
+          value={dietaryPreferences}
+          onChange={(e) => setDietaryPreferences(e.target.value)}
+          required
+        />
+        <br />
+        <label>Image:</label>
+        <input type="file" onChange={handleFileChange} required />
+        <br />
+        <button type="submit">Create Meal Plan</button>
       </form>
     </div>
   );
 }
+
 
 export default MealPlanForm;
