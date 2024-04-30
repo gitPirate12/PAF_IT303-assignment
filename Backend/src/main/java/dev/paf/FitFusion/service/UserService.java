@@ -1,42 +1,37 @@
 package dev.paf.FitFusion.service;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.paf.FitFusion.model.User;
-import dev.paf.FitFusion.repository.UserRepo;
-
-
+import dev.paf.FitFusion.repository.UserRepository;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepo UserDetailsRepo;
 
-    // public List<User> getAllUserDetails(String id) {
-    //     return UserDetailsRepo.findById(id);
-    // }
+    @Autowired
+    private UserRepository userRepository;
 
     public User getUserDetailsById(String id) {
-        return UserDetailsRepo.findById(id).orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 
-    public User createUserAccount( User createAccount) {
-        return UserDetailsRepo.save(createAccount);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-
+    public User createUserAccount(User user) {
+        return userRepository.save(user);
+    }
 
     public User updateUserDetails(String id, User userDetails) {
         userDetails.setId(id);
-        return UserDetailsRepo.save(userDetails);
+        return userRepository.save(userDetails);
     }
-    
 
     public void deleteUserDetails(String id) {
-        UserDetailsRepo.deleteById(id);
+        userRepository.deleteById(id);
     }
-
-    
 }
