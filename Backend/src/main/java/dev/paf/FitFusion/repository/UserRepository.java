@@ -1,14 +1,10 @@
 package dev.paf.FitFusion.repository;
 
-
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import dev.paf.FitFusion.model.User;
 
-
-
-public interface UserRepo extends MongoRepository<User,String> {
-
-
-    
+@Repository
+public interface UserRepository extends MongoRepository<User, String> {
 }
