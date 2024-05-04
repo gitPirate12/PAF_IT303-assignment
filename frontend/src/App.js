@@ -1,7 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import ViewPost from './component/SocialMediaPosts/viewPost';
+
+
+
+
+import ViewPost from './component/SocialMediaPosts/viewPost';//View post
 import Navbar from './component/Navbar/Navbar';//Nav bar
 import MealPlanForm from './component/CreateMealplan/MealPlanForm';//create Mealplan
 import FetchMealPlans from './component/FetchMealPlans/FetchMealPlans';//View mealplan
