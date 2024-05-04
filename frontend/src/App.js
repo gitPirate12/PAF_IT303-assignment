@@ -1,7 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-//import ViewPost from './component/SocialMediaPosts/viewPost.jsx';//View post
 import ViewPost from './component/SocialMediaPosts/viewPost';
 import Navbar from './component/Navbar/Navbar';//Nav bar
 import MealPlanForm from './component/CreateMealplan/MealPlanForm';//create Mealplan
