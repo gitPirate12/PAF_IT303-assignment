@@ -20,7 +20,6 @@ function App() {
         <Route path='/createmeal' element={<MealPlanForm />} />
         <Route path='/viewmealplan' element={<FetchMealPlans />} />
         <Route path='/updatemealplan' element={<MealPlanUpdate />} />
-        {/* <Route path='/viewPost' element={<ViewPost />} /> */}
         <Route path='/ViewPost' element={<ViewPost />} />
         <Route path='/AddPost' element={<AddPost />} />
         
