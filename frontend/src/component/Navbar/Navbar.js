@@ -36,11 +36,11 @@ function Navbar() {
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                to="/viewmealplan"
+                to="/Rash_fade"
                 className={`nav-link ${activeLink === "World Translator" ? "active" : ""}`}
                 onClick={() => handleLinkClick("World Translator")}
               >
-                Mealplan
+                World Translator
               </Link>
             </li>
             <li className="nav-item">
@@ -54,15 +54,18 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/viewPost"
+                to="/community"
                 className={`nav-link ${activeLink === "Community" ? "active" : ""}`}
                 onClick={() => handleLinkClick("Community")}
               >
-                ViewPost
+                Community
               </Link>
             </li>
+            
           </ul>
-          <div className="navbar-profile">
+          
+        </div>
+        <div className="navbar-profile">
             <div className="dropdown">
               <button
                 className="btn btn-secondary dropdown-toggle"
@@ -79,7 +82,6 @@ function Navbar() {
               </ul>
             </div>
           </div>
-        </div>
       </div>
     </nav>
   );
