@@ -20,15 +20,13 @@ public class SocialMediaPost {
     private String postDescription;
     private List<byte[]> postImages;
     private List<byte[]> postVideos;
-    private List<PostComment> comments;
     private int likeCount; // Represents the total count of likes for this post
 
     public SocialMediaPost(String postDescription, List<byte[]> postImages, List<byte[]> postVideos,
-                           List<PostComment> comments, int likeCount) {
+                           int likeCount) {
         this.postDescription = postDescription;
         this.postImages = postImages;
         this.postVideos = postVideos;
-        this.comments = comments;
         this.likeCount = likeCount;
     }
 
@@ -62,14 +60,6 @@ public class SocialMediaPost {
 
     public void setPostVideos(List<byte[]> postVideos) {
         this.postVideos = postVideos;
-    }
-
-    public List<PostComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<PostComment> comments) {
-        this.comments = comments;
     }
 
     public int getLikeCount() {

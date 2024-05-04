@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+.container {
+  max-width: 38em;
+  padding: 1em 3em 2em 3em;
+  margin: 0em auto;
+  background-color: #fff;
+  border-radius: 4.2px;
+  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
+.label-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  color: #f0a500; /* Change label color to orange */
+}
+
+.input-field {
+  width: 100%;
+  padding: 1em;
+  line-height: 1.4;
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  transition: all 0.35s ease-in-out;
+}
+
+.input-field:focus {
+  outline: 0;
+  border-color: #bd8200;
+}
+
+.input-field:focus + .input-icon i {
+  color: #f0a500;
+}
+
+.input-field:focus + .input-icon:after {
+  border-right-color: #f0a500;
+}
+
+.btn-primary {
+    background-color: #1aac83; /* Change primary button color */
+    border: none; /* Remove border */
+    color: #fff; /* Text color */
+    padding: 12px 24px; /* Increase padding for better spacing */
+    border-radius: 6px; /* Rounder corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins', sans-serif; /* Use Poppins font family */
+    font-weight: 600; /* Use font-weight 600 */
+    text-transform: uppercase; /* Uppercase text */
+  }
+  
+  .btn-primary:hover {
+    background-color: #16a06a; /* Darken background color on hover */
+  }
+  
+.error-message {
+  color: #e7195a; /* Change error message color */
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #1aac83; /* Change success message color */
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif; /* Use Poppins font family */
+  font-weight: bold; /* Make it bold */
+  color: black; /* Set color to black */
+}
+
+
+.file-input-label {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding: 10px 15px;
+    background-color: #1aac83; /* Custom button background color */
+    color: #fff; /* Custom button text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-input-label:hover {
+    background-color: #16a06a; /* Custom button hover background color */
+  }
+  
+  .file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  /* Hide the default file input button */
+.input-field1 {
+    display: none;
+  }
+  
+  /* Style the custom button */
+  .custom-file-button1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #120d0d; /* Custom button background color */
+    color: #fff; /* Custom button text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button1:hover {
+    background-color: #808080; /* Custom button hover background color */
+  }
+  
+  .custom-file-button2 {
+    background-color: #1aac83; /* Customize the background color */
+    color: grey;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button2:hover {
+    background-color: #16a06a; /* Darken the background color on hover */
+  }
+  
+  label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500; /* Sets font weight to bold */
+    color: var(--primary); /* Sets text color using the primary color variable */
+  }
+
+  .input-field,
+.custom-file-button1,
+.custom-file-button2 {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.custom-file-button1,
+.custom-file-button2 {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.custom-file-button1:hover,
+.custom-file-button2:hover {
+  background-color: #16a06a;
+}
+
+
+.custom-file-button1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: lightgrey; /* Dark grey background color */
+    color: #f1f1f1; /* Custom button text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button1:hover {
+    background-color: #808080; /* Lighter grey background color on hover */
+  }
+  
+  .custom-file-button2 {
+    background-color: lightgrey; /* Dark grey background color */
+    color: #f1f1f1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button2:hover {
+    background-color: #808080; /* Lighter grey background color on hover */
+  }
+  
+  
+  .container {
+    margin-top: 60px; /* Adjust the margin top value as needed */
+  }
+
+  .custom-file-button1,
+.custom-file-button2 {
+  position: relative; /* Ensure the button container is positioned relatively */
+  overflow: hidden; /* Hide overflowing text */
+}
+
+.custom-file-button1::before,
+.custom-file-button2::before {
+  content: ''; /* Empty content */
+  position: absolute; /* Position the pseudo-element */
+  top: 0; /* Align it to the top */
+  left: 0; /* Align it to the left */
+  width: 100%; /* Take up the full width */
+  height: 100%; /* Take up the full height */
+}
+
+.custom-file-button1 img,
+.custom-file-button2 img {
+  position: relative; /* Ensure the image is positioned relatively */
+  z-index: 1; /* Place it above the pseudo-element */
+}
+
+.custom-file-button1,
+.custom-file-button2 {
+  font-size: 0; /* Set font size to 0 to hide text */
+}
+
+
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Ensure the video is behind other content */
+  }
+  
