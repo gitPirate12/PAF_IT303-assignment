@@ -11,6 +11,7 @@ import MealPlanForm from './component/CreateMealplan/MealPlanForm';//create Meal
 import FetchMealPlans from './component/FetchMealPlans/FetchMealPlans';//View mealplan
 import MealPlanUpdate from './component/MealPlanUpdate/MealPlanUpdate';//Update meal plan
 import AddPost from './component/SocialMediaPosts/addPost';
+import DeletePost from './component/SocialMediaPosts/deletePost';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route path='/updatemealplan' element={<MealPlanUpdate />} />
         <Route path='/ViewPost' element={<ViewPost />} />
         <Route path='/AddPost' element={<AddPost />} />
-        
+        <Route path='/DeletePost' element={<DeletePost />} />
       </Routes>
     </div>
    </Router>
