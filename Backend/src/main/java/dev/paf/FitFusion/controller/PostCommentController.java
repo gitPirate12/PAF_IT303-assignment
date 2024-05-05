@@ -20,13 +20,15 @@ public class PostCommentController {
     @Autowired
     private PostCommentService postCommentService;
 
-   @GetMapping("/{id}")
-public ResponseEntity<PostComment> getSingleComment(@PathVariable String id) {
-    ObjectId objectId = new ObjectId(id);
-    Optional<PostComment> comment = postCommentService.getSingleComment(objectId);
-    return comment.map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
-}
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<PostComment>> getCommentsByPostId(@PathVariable String postId) {
+        try {
+            List<PostComment> comments = postCommentService.getCommentsByPostId(postId);
+            return ResponseEntity.ok(comments);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     @GetMapping
     public ResponseEntity<List<PostComment>> getAllComments() {
@@ -45,24 +47,21 @@ public ResponseEntity<PostComment> getSingleComment(@PathVariable String id) {
     }
 
     @PutMapping("/{commentId}")
-public ResponseEntity<PostComment> updateComment(@PathVariable String commentId, @RequestBody Map<String, String> payload) {
-    String text = payload.get("text");
-    ObjectId objectId = new ObjectId(commentId);
-    PostComment updatedComment = postCommentService.updateComment(objectId, text);
-    if (updatedComment != null) {
-        return ResponseEntity.ok().body(updatedComment);
-    } else {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<PostComment> updateComment(@PathVariable String commentId, @RequestBody Map<String, String> payload) {
+        String text = payload.get("text");
+        PostComment updatedComment = postCommentService.updateComment(commentId, text);
+        if (updatedComment != null) {
+            return ResponseEntity.ok().body(updatedComment);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
-@DeleteMapping("/{commentId}")
-public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
-    ObjectId objectId = new ObjectId(commentId);
-    postCommentService.deleteComment(objectId);
-    return ResponseEntity.noContent().build();
-}
-
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
+        postCommentService.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
+    }
 
     @DeleteMapping("/all")
     public ResponseEntity<Void> deleteAllComments() {

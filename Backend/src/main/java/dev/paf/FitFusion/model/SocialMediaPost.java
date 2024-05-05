@@ -1,6 +1,5 @@
 package dev.paf.FitFusion.model;
 
-import org.bson.types.ObjectId; // Import ObjectId from org.bson.types
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class SocialMediaPost {
 
     @Id
-    private ObjectId id; // Change the type of id to ObjectId
+    private String id; // Change the type of id to String
 
     private String postDescription;
     private List<byte[]> postImages;
@@ -30,11 +29,11 @@ public class SocialMediaPost {
         this.likeCount = likeCount;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

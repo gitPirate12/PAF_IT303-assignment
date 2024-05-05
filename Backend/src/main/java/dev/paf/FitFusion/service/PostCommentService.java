@@ -21,16 +21,18 @@ public class PostCommentService {
         return postCommentRepository.insert(comment);
     }
 
-    public Optional<PostComment> getSingleComment(ObjectId id) {
-        return postCommentRepository.findById(id);
+    public Optional<PostComment> getSingleComment(String id) {
+        ObjectId objectId = new ObjectId(id);
+        return postCommentRepository.findById(objectId.toHexString());
     }
 
     public List<PostComment> getAllComments() {
         return postCommentRepository.findAll();
     }
 
-    public PostComment updateComment(ObjectId id, String text) {
-        Optional<PostComment> optionalComment = postCommentRepository.findById(id);
+    public PostComment updateComment(String id, String text) {
+        ObjectId objectId = new ObjectId(id);
+        Optional<PostComment> optionalComment = postCommentRepository.findById(objectId.toHexString());
         if (optionalComment.isPresent()) {
             PostComment comment = optionalComment.get();
             comment.setText(text);
@@ -45,7 +47,14 @@ public class PostCommentService {
         postCommentRepository.deleteAll();
     }
 
-    public void deleteComment(ObjectId id) {
-        postCommentRepository.deleteById(id);
+    public void deleteComment(String id) {
+        ObjectId objectId = new ObjectId(id);
+        postCommentRepository.deleteById(objectId.toHexString());
     }
+
+    public List<PostComment> getCommentsByPostId(String postId) {
+        return postCommentRepository.findByPostId(postId);
+    }
+    
+    
 }
