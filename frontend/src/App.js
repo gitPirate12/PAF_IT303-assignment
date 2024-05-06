@@ -1,20 +1,24 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import ViewPost from './component/SocialMediaPosts/viewPost';
-import Navbar from './component/Navbar/Navbar';
-import MealPlanForm from './component/CreateMealplan/MealPlanForm';
-import FetchMealPlans from './component/FetchMealPlans/FetchMealPlans';
-import MealPlanUpdate from './component/MealPlanUpdate/MealPlanUpdate';
+
+
+
+
+import ViewPost from './component/SocialMediaPosts/viewPost';//View post
+import Navbar from './component/Navbar/Navbar';//Nav bar
+import MealPlanForm from './component/CreateMealplan/MealPlanForm';//create Mealplan
+import FetchMealPlans from './component/FetchMealPlans/FetchMealPlans';//View mealplan
+import MealPlanUpdate from './component/MealPlanUpdate/MealPlanUpdate';//Update meal plan
 import AddPost from './component/SocialMediaPosts/addPost';
 import DeletePost from './component/SocialMediaPosts/deletePost';
-import EditPost from './component/SocialMediaPosts/editPost';
 
 function App() {
   return (
+
    <Router>
     <div>
-      <Navbar />
+      { <Navbar/> }
 
       <Routes>
         <Route path='/createmeal' element={<MealPlanForm />} />
@@ -23,11 +27,12 @@ function App() {
         <Route path='/ViewPost' element={<ViewPost />} />
         <Route path='/AddPost' element={<AddPost />} />
         <Route path='/DeletePost' element={<DeletePost />} />
-        <Route path='/EditPost/:postId' element={<EditPost />} />
       </Routes>
     </div>
    </Router>
-  );
+  )
 }
+
+
 
 export default App;
