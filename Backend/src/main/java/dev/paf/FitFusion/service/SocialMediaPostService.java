@@ -2,7 +2,6 @@ package dev.paf.FitFusion.service;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +42,7 @@ public class SocialMediaPostService {
                 imageBytes.add(image.getBytes());
             } catch (IOException e) {
                 // Handle exception
-                SystemEnvironmentOrigin.err.println("Error reading image file: " + e.getMessage());
+                System.err.println("Error reading image file: " + e.getMessage());
                 // You can throw a custom exception or log the error as needed
             }
         }
