@@ -62,7 +62,9 @@ function EditPost() {
     }
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/socialMediaPost/${postId}`, formData);
+      const response = await axios.put(`http://localhost:8080/api/socialMediaPost/${postId}`, formData, {
+        withCredentials: true, // Include credentials (cookies) in the request
+      });
       console.log('Post updated:', response.data);
       setError(null);
       Swal.fire({
