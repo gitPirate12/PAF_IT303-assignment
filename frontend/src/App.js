@@ -9,7 +9,7 @@ import MealPlanUpdate from './component/MealPlanUpdate/MealPlanUpdate';
 import AddPost from './component/SocialMediaPosts/addPost';
 import DeletePost from './component/SocialMediaPosts/deletePost';
 import EditPost from './component/SocialMediaPosts/editPost';
-
+import Homepage from './component/homepage';
 function App() {
   return (
    <Router>
@@ -24,6 +24,7 @@ function App() {
         <Route path='/AddPost' element={<AddPost />} />
         <Route path='/DeletePost' element={<DeletePost />} />
         <Route path='/EditPost/:postId' element={<EditPost />} />
+        <Route path='/' element={<Homepage />} />
       </Routes>
     </div>
    </Router>
