@@ -14,6 +14,7 @@ import ViewProfile from './component/View_user/view_user';
 import NavigationBarB from './component/NavigationBarB/NavigationBarB';
 import UserContext from './component/ContextComponent/ContextComponent';
 import UserForm from './component/UserForm/UserForm';
+import EditPost from './component/SocialMediaPosts/editPost';
 
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/profile/:id' element={<ViewProfile />} />
           <Route path='/createUser' element={<UserForm />} />
+          <Route path='/EditPost/:id' element={<EditPost />} />
 
 
         </Routes>

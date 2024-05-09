@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
-import './addPostStyle.css';
-import uploadImg from './Images/upload.svg';
-import background from './Images/bg.mp4';
+
+
+
 
 function EditPost() {
   const { postId } = useParams();
@@ -91,10 +91,7 @@ function EditPost() {
 
   return (
     <>
-      <video autoPlay loop muted className="bg-video">
-        <source src={background} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      
       <div className="container">
         <form onSubmit={handleSubmit} className="form">
           <h1>Edit Post</h1>
@@ -131,7 +128,7 @@ function EditPost() {
                   />
                   <div className="file-name">{imageFileNames.length > 0 ? imageFileNames.join(', ') : 'No file chosen'}</div>
                   <button type="button" className="custom-file-button1" onClick={() => document.getElementById('imageInput').click()} disabled={imageFiles.length >= 3}>
-                    <img src={uploadImg} alt="Upload" className="upload-icon" /> Choose File
+                     Choose File
                   </button>
                 </div>
               </div>
@@ -142,7 +139,7 @@ function EditPost() {
                   <label htmlFor="videoInput">Add Video:</label>
                   <div className="file-name">{videoFileName ? videoFileName : 'No file chosen'}</div>
                   <button type="button" className="custom-file-button2" onClick={handleClickVideoButton} disabled={videoFile}>
-                    <img src={uploadImg} alt="Upload" className="upload-icon" /> Choose File
+                     Choose File
                     <input
                       ref={videoInputRef}
                       id="videoInput"

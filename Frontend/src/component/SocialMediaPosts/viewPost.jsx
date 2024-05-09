@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
-import { UilHeart, UilMessage, UilEllipsisV, UilComment } from '@iconscout/react-unicons'; // Import icons from Unicons
+import { Button, IconButton } from '@mui/material';
+import { Favorite, Chat, MoreVert } from '@mui/icons-material'; // Material-UI icons
 import './viewPostStyle.css';
 import Swal from 'sweetalert2';
+import viewPostbg from './Images/Bg4.mp4';
 
 function ViewPost() {
     const [posts, setPosts] = useState([]);
@@ -91,8 +93,8 @@ function ViewPost() {
 
     const renderComments = (postId) => {
         const postComments = comments[postId] || [];
-        return postComments.map((comment) => (
-            <div key={comment._id}>
+        return postComments.map((comment, index) => (
+            <div key={index} className={`comment-${postId}-${index}`}>
                 <p>{comment.username}: {comment.text}</p>
             </div>
         ));
@@ -129,19 +131,26 @@ function ViewPost() {
             denyButtonText: 'Delete',
             showLoaderOnConfirm: true,
             preConfirm: async () => {
-                // Your edit logic here
-                console.log('Editing post...');
-                console.log('Post ID:', postId);
-                // Construct the edit URL
-                const editUrl = `/EditPost/${postId}`;
-                setRedirectUrl(editUrl); // Set the URL to state
+                try {
+                    // Your edit logic here
+                    console.log('Editing post...');
+                    console.log('Post ID:', postId);
+                    // Construct the edit URL
+                    const editUrl = `/EditPost/${postId}`;
+                    // Return the edit URL to setRedirectUrl
+                    return editUrl;
+                } catch (error) {
+                    console.error('Error editing post:', error);
+                    Swal.showValidationMessage(`Edit failed: ${error}`);
+                }
             }
         }).then(async (result) => {
             if (result.isConfirmed) {
                 // Redirect to the edit post component
-                if (redirectUrl) {
-                    console.log('Redirecting to:', redirectUrl); // Log the redirect URL
-                    window.location.href = redirectUrl; // Redirect the user
+                if (result.value) {
+                    console.log('Redirecting to:', result.value); // Log the redirect URL
+                    setRedirectUrl(result.value); // Set the URL to state
+                    window.location.href = result.value; // Redirect the user
                 }
             } else if (result.isDenied) {
                 // Handle deletion
@@ -187,18 +196,21 @@ function ViewPost() {
 
     return (
         <div className='ViewPostHome'>
-            <Link to="/AddPost" className="addPostButton">Add Post</Link>
-            {posts.map((post) => (
-                <div key={post.id} className="postContainer">
+            <Button component={Link} to="/AddPost" className="addPostButton" variant="contained" color="primary" style={{ marginLeft: '1330px', backgroundColor: 'black', color: 'white', border: 'none' }}>
+                Add Post
+            </Button>
+            {posts.map((post, postIndex) => (
+                <div key={post.id} className={`postContainer post-${post.id}`}>
                     <div className="postContent">
+                        <p>{post.postDescription}</p>
                         <Slider {...sliderSettings}>
                             {post.postImages.map((image, index) => (
-                                <div key={index}>
+                                <div key={index} className={`postImage-${post.id}-${index}`}>
                                     <img src={`data:image/jpeg;base64,${image}`} alt={`Image ${index + 1}`} className="media" />
                                 </div>
                             ))}
                             {post.postVideos.map((video, index) => (
-                                <div key={index}>
+                                <div key={index} className={`postVideo-${post.id}-${index}`}>
                                     <video controls className="media">
                                         <source src={`data:video/mp4;base64,${video}`} type="video/mp4" />
                                         Your browser does not support the video tag.
@@ -208,20 +220,20 @@ function ViewPost() {
                         </Slider>
                     </div>
                     <div className="postActions">
-                        <div>
-                            <button
-                                className="editButton"
+                        <div className='edtbtn'>
+                            <IconButton
+                                className={`editButton editButton-${post.id}`}
                                 onClick={() => handleEdit(post.id)}
                             >
-                                <UilEllipsisV size="20" />
-                            </button>
+                                <MoreVert size="small" />
+                            </IconButton>
                         </div>
-                        <button onClick={() => handleLike(post.id)}>
-                            <UilHeart size="30" />
-                        </button>
-                        <button onClick={() => handleComment(post.id)}><UilComment size="30" /></button>
-                        <p>{post.likeCount} Likes</p>
-                        <p>{post.postDescription}</p>
+                        <Button onClick={() => handleLike(post.id)} className={`likeButton likeButton-${post.id}`} startIcon={<Favorite />} style={{ color: 'black' }}>
+                            {post.likeCount} Likes
+                        </Button>
+                        <Button onClick={() => handleComment(post.id)} className={`commentButton commentButton-${post.id}`} startIcon={<Chat />} style={{ color: 'black' }}>
+                            Comment
+                        </Button>
                         {renderComments(post.id)}
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Container, Typography, Grid, IconButton } from '@mui/material';
 import { AddCircleOutline, ArrowBack } from '@mui/icons-material';
 import { MdAddAPhoto } from 'react-icons/md';
@@ -6,6 +6,8 @@ import { RiVideoAddFill } from 'react-icons/ri';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import addPostBg from './Images/Bg2.jpg';
+import './addPost.css';
 
 // Create a custom theme
 const theme = createTheme({
@@ -23,6 +25,19 @@ function AddPost() {
   const [imageFileNames, setImageFileNames] = useState([]);
   const [videoFileNames, setVideoFileNames] = useState([]);
   const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    // Apply background image to body when component mounts
+    document.body.style.backgroundImage = `url(${addPostBg})`;
+    document.body.style.backgroundSize = '100% 140%';
+    document.body.style.backgroundPosition = 'center top';
+    document.body.style.backgroundRepeat = 'no-repeat';
+
+    // Clean up function to remove background image when component unmounts
+    return () => {
+      document.body.style.backgroundImage = '';
+    };
+  }, []);
 
   const handleDescriptionChange = (event) => {
     setPostDescription(event.target.value);
@@ -119,6 +134,10 @@ function AddPost() {
     }
   };
 
+  const handleBackButtonClick = () => {
+    window.location.href = '/home'; // Redirect to '/home' route
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
@@ -165,7 +184,11 @@ function AddPost() {
                   style={{ display: 'none' }}
                 />
                 {imageFileNames.length > 0 && (
-                  <div className="selected-files">Selected Images: {imageFileNames.join(', ')}</div>
+                  <div className="selected-files">Selected Images: {imageFileNames.length > 0 && (
+                    <Typography variant="body1" style={{ fontFamily: 'Roboto' }}>
+                      Selected Images: {imageFileNames.join(', ')}
+                    </Typography>
+                  )}</div>
                 )}
               </Grid>
               <Grid item xs={12}>
@@ -183,14 +206,32 @@ function AddPost() {
                   style={{ display: 'none' }}
                 />
                 {videoFileNames.length > 0 && (
-                  <div className="selected-files">Selected Videos: {videoFileNames.join(', ')}</div>
+                  <div className="selected-files">Selected Videos: {videoFileNames.length > 0 && (
+                    <Typography variant="body1" style={{ fontFamily: 'Roboto' }}>
+                      Selected Videos: {videoFileNames.join(', ')}
+                    </Typography>
+                  )}</div>
                 )}
               </Grid>
             </Grid>
-            <Button variant="contained" color="primary" type="submit" startIcon={<AddCircleOutline />} style={{ backgroundColor: '#000', color: '#fff', margin: '10px 0', borderRadius: '0', minWidth: '120px' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              startIcon={<AddCircleOutline />}
+              style={{ backgroundColor: '#000', color: '#fff', margin: '10px 0', borderRadius: '0', minWidth: '120px' }}
+            >
               Add Post
             </Button>
-            <Button variant="outlined" color="primary" startIcon={<ArrowBack />} style={{ color: '#000', margin: '10px 10px 10px 0', borderRadius: '0', minWidth: '120px', borderColor: '#000' }}>Back</Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<ArrowBack />}
+              onClick={handleBackButtonClick}
+              style={{ color: '#000', margin: '10px 10px 10px 0', borderRadius: '0', minWidth: '120px', borderColor: '#000' }}
+            >
+              Back
+            </Button>
             {error && <div className="error-message">{error}</div>}
           </form>
         </div>
@@ -206,7 +247,6 @@ function AddPost() {
         .swal-confirm-button:hover {
           background-color: #555 !important; // Change this to the color you want on hover
         }
-        
       `}</style>
     </ThemeProvider>
   );

@@ -1,12 +1,12 @@
-/* viewPostStyle.css */
+/* 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
-/* Styling for individual posts */
+
 .viewPost {
-    margin: 20px auto; /* Adjust margin to center horizontally */
+    margin: 20px auto; 
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    max-width: 600px; /* Set maximum width */
+    max-width: 600px; 
 }
 
 .viewPost p {
@@ -26,7 +26,7 @@
     margin-bottom: 10px;
 }
 
-/* Styling for comments */
+
 .commentContainer {
     margin-top: 20px;
     padding: 10px;
@@ -51,97 +51,92 @@
     font-style: italic;
 }
 
-/* Centering the slider */
+
 .slick-slider {
     margin: 0 auto;
 }
 
-/* Styling for action buttons */
+
 .actionButtons {
-    margin-top: 30px; /* Add space above the buttons */
+    margin-top: 30px; 
 }
 
 .actionButtons button {
-    margin-right: 5px; /* Add space between the buttons */
+    margin-right: 5px; 
 }
 
 
 
 
-/* viewPostStyle.css */
 
-/* Positioning for "Add Post" button */
+
+
 .addPostButton {
-    margin-left: 1300px; /* Add space to the left of the button */
+    margin-left: 1300px; 
 
-    position: absolute; /* Position the button absolutely */
-    top: 150px; /* Adjust the top distance from the top of the page */
-    background-color: #0056b3; /* Darker background color on hover */
-    border: none; /* Remove border */
-    color: #fff; /* Text color */
-    padding: 12px 24px; /* Increase padding for better spacing */
-    border-radius: 6px; /* Rounder corners */
+    position: absolute; 
+    top: 150px; 
+    background-color: #0056b3; 
+    border: none; 
+    color: #fff; 
+    padding: 12px 24px; 
+    border-radius: 6px; 
     cursor: pointer;
-    font-family: 'Poppins', sans-serif; /* Use Poppins font family */
-    font-weight: 600; /* Use font-weight 600 */
-    text-decoration: none; /* Remove underline */
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
+    text-decoration: none; 
 }
 
 .addPostButton:hover {
-    background-color: rgb(21, 131, 168); /* Darker background color on hover */
-    border: none; /* Remove border */
-    color: #fff; /* Text color */
-    padding: 12px 24px; /* Increase padding for better spacing */
-    border-radius: 6px; /* Rounder corners */
+    background-color: rgb(21, 131, 168); 
+    border: none; 
+    color: #fff; 
+    padding: 12px 24px; 
+    border-radius: 6px; 
     cursor: pointer;
-    font-family: 'Poppins', sans-serif; /* Use Poppins font family */
-    font-weight: 600; /* Use font-weight 600 */
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
     
 }
 
-/* Styling for action buttons */
+
 .actionButtons button {
-    margin-right: 5px; /* Add space between the buttons */
-    background: none; /* Remove background */
-    border: none; /* Remove border */
-    padding: 0; /* Remove padding */
-    cursor: pointer; /* Set cursor to pointer */
+    margin-right: 5px; 
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer; 
 }
 
-/* Styling for action buttons on hover */
+
 .actionButtons button:hover {
-    background-color: transparent; /* Set background color to transparent on hover */
+    background-color: transparent; 
 }
 
-/* Styling for action buttons img */
+
 .actionButtons button img {
-    width: 24px; /* Adjust width of the image */
-    height: 24px; /* Adjust height of the image */
+    width: 24px; 
+    height: 24px; 
 }
 .actionButtons button:focus {
-    outline: none; /* Remove focus outline */
+    outline: none; 
 }
 
 .media {
-    width: 98%; /* Set width to fill the container */
-    height: auto; /* Maintain aspect ratio */
-    max-width: 600px; /* Set maximum width */
-    max-height: 400px; /* Set maximum height */
+    width: 98%; 
+    height: auto; 
+    max-width: 600px; 
+    max-height: 400px; 
 }
 
-/* viewPostStyle.css */
 
-/* Styling for individual posts */
-/* viewPostStyle.css */
-
-/* Styling for individual posts */
 .postContainer {
-    margin: 20px auto; /* Center horizontally and add margin-bottom to separate posts */
+    margin: 20px auto; 
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    max-width: 600px; /* Set maximum width */
-    overflow: hidden; /* Hide overflowing content */
+    max-width: 600px; 
+    overflow: hidden; 
 }
 
 
@@ -162,7 +157,7 @@
     margin-bottom: 10px;
 }
 
-/* Styling for comments */
+
 .commentContainer {
     margin-top: 20px;
     padding: 10px;
@@ -187,60 +182,82 @@
     font-style: italic;
 }
 
-/* Centering the slider */
+
 .slick-slider {
     margin: 0 auto;
 }
 
-/* Styling for action buttons */
+
 .actionButtons {
-    margin-top: 30px; /* Add space above the buttons */
+    margin-top: 30px; 
 }
 
 .actionButtons button {
-    margin-right: 5px; /* Add space between the buttons */
+    margin-right: 5px; 
 }
-/* Styling for action buttons */
 
 
 
-/* viewPostStyle.css */
 
-/* viewPostStyle.css */
 
-/* viewPostStyle.css */
-
-/* Styling for action buttons */
 .postActions {
-    margin-top: 30px; /* Add space above the buttons */
+    margin-top: 30px; 
 }
 
 .postActions button {
-    border: none; /* Remove border */
-    background: none; /* Remove background */
-    padding: 0; /* Remove padding */
+    border: none; 
+    background: none; 
+    padding: 0; 
     cursor: pointer;
-    vertical-align: middle; /* Align icon vertically */
+    vertical-align: middle; 
 }
 
 .postActions button:focus {
-    outline: none; /* Remove focus outline */
+    outline: none; 
 }
 
-/* Add hover effect to icons */
+
 .postActions button .uil-heart:hover,
 .postActions button .uil-message:hover {
-    stroke: blue; /* Change icon stroke color on hover */
-    fill: blue; /* Change icon fill color on hover (if applicable) */
+    stroke: blue; 
+    fill: blue; 
 }
 
 .editButton {
    top:150px;
-    margin-left: 590px; /* Move the button to the right */
+    margin-left: 590px; 
     position: absolute;
     
 }
 
 
+
+ */
+
+ .media {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Adjust as needed */
+    object-fit: cover; /* Ensures the image/video covers the entire container */
+}
+
+
+.postContainer {
+    position: relative;
+    margin: 20px auto; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 600px; 
+    overflow: hidden; 
+}
+
+.edtbtn {
+    position: absolute;
+    top: 20px; /* Adjust as needed */
+    right: -10px; /* Adjust as needed */
+    z-index: 1;
+    
+}
 
 
