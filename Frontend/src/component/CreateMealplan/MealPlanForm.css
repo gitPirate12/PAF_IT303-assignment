@@ -1,0 +1,77 @@
+/* MealPlanForm.css */
+
+.MealformContainer {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .MealformContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .MealformContainer label {
+    font-weight: bold;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .inputGroup input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .addButton,
+  .removeButton {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .addButton {
+    background-color: #007bff;
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .removeButton {
+    background-color: #dc3545;
+  }
+  
+  .removeButton:hover {
+    background-color: #a71d2a;
+  }
+
+  .submitButton {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .submitButton:hover {
+    background-color: #218838;
+  }

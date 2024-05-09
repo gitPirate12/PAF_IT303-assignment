@@ -1,0 +1,250 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+.container {
+  max-width: 38em;
+  padding: 1em 3em 2em 3em;
+  margin: 0em auto;
+  background-color: #fff;
+  border-radius: 4.2px;
+  box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
+} */
+
+/* .form-group {
+  margin-bottom: 1em;
+}
+
+.label-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  color: #f0a500; 
+} */
+
+/* .input-field {
+  width: 100%;
+  padding: 1em;
+  line-height: 1.4;
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  transition: all 0.35s ease-in-out;
+}
+
+.input-field:focus {
+  outline: 0;
+  border-color: #bd8200;
+}
+
+.input-field:focus + .input-icon i {
+  color: #f0a500;
+}
+
+.input-field:focus + .input-icon:after {
+  border-right-color: #f0a500;
+} */
+
+/* .btn-primary {
+    background-color: #1aac83; 
+    border: none; 
+    color: #fff; 
+    padding: 12px 24px; 
+    border-radius: 6px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+  }
+  
+  .btn-primary:hover {
+    background-color: #16a06a; 
+  }
+  
+.error-message {
+  color: #e7195a; 
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #1aac83; 
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif; 
+  font-weight: bold; 
+  color: black; 
+} */
+
+
+/* .file-input-label {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding: 10px 15px;
+    background-color: #1aac83; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-input-label:hover {
+    background-color: #16a06a; 
+  }
+  
+  .file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  
+.input-field1 {
+    display: none;
+  }
+  
+  
+  .custom-file-button1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #120d0d; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button1:hover {
+    background-color: #808080; 
+  }
+  
+  .custom-file-button2 {
+    background-color: #1aac83; 
+    color: grey;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button2:hover {
+    background-color: #16a06a; 
+  }
+  
+  label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500; 
+    color: var(--primary); 
+  }
+
+  .input-field,
+.custom-file-button1,
+.custom-file-button2 {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.custom-file-button1,
+.custom-file-button2 {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.custom-file-button1:hover,
+.custom-file-button2:hover {
+  background-color: #16a06a;
+}
+
+
+.custom-file-button1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: lightgrey; 
+    color: #f1f1f1; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button1:hover {
+    background-color: #808080; 
+  }
+  
+  .custom-file-button2 {
+    background-color: lightgrey; 
+    color: #f1f1f1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-button2:hover {
+    background-color: #808080; 
+  }
+  
+  
+  .container {
+    margin-top: 60px; 
+  }
+
+  .custom-file-button1,
+.custom-file-button2 {
+  position: relative; 
+  overflow: hidden; 
+}
+
+.custom-file-button1::before,
+.custom-file-button2::before {
+  content: ''; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+}
+
+.custom-file-button1 img,
+.custom-file-button2 img {
+  position: relative; 
+  z-index: 1; 
+}
+
+.custom-file-button1,
+.custom-file-button2 {
+  font-size: 0; 
+}
+
+
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; 
+  }
+   */

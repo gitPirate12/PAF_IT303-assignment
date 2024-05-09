@@ -1,0 +1,78 @@
+/* FetchMealPlans.css */
+.mealPlansContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+
+.mealPlanCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mealPlanImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.mealPlanDetails {
+  padding: 20px;
+}
+
+.mealPlanTitle {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.mealPlanDescription {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.mealPlanButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mealPlanLink {
+  text-decoration: none;
+}
+
+.mealPlanButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+}
+
+.mealPlanButton:hover {
+  background-color: #0056b3;
+}
+
+.mealdata {
+  font-weight: bold;
+  color: #6e7e35;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.deletemeal {
+  background-color: rgb(255, 1, 1);
+  color: rgb(247, 247, 247); 
+  
+}
+.deletemeal:hover {
+  background-color: #e83939;
+}
+
