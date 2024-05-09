@@ -37,7 +37,7 @@ function App() {
 
   return (
     <Router>
-            <UserContext.Provider value={{ user, setUser }}>
+            {/* <UserContext.Provider value={{ user, setUser }}> */}
 
             <div className="App">
 
@@ -56,7 +56,7 @@ function App() {
           <Route path='/' element={<Index />} />
           <Route path='/createmeal' element={<MealPlanForm />} />
           <Route path='/viewmealplan' element={<FetchMealPlans />} />
-          <Route path='/viewPost' element={<ViewPost />} />
+          <Route path='/home' element={<ViewPost />} />
           <Route path='/AddPost' element={<AddPost />} />
           <Route path='/update-meal-plan/:id' element={<UpdateMealPlan />} />
           <Route path='/login' element={<Login />} />
@@ -68,7 +68,7 @@ function App() {
       </div>
 
 
-      </UserContext.Provider>
+      {/* </UserContext.Provider> */}
 
     </Router>
   )

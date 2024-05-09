@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
+import { Button, TextField, Container, Typography, Grid, IconButton } from '@mui/material';
+import { AddCircleOutline, ArrowBack } from '@mui/icons-material';
+import { MdAddAPhoto } from 'react-icons/md';
+import { RiVideoAddFill } from 'react-icons/ri';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import uploadImg from './Images/upload.svg';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#333', // Change this to the color you want
+    },
+  },
+});
 
 function AddPost() {
   const [postDescription, setPostDescription] = useState('');
@@ -37,7 +50,23 @@ function AddPost() {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'You can only upload a maximum of 3 images or videos.'
+        text: 'You can only upload a maximum of 3 images or videos.',
+        customClass: {
+          confirmButton: 'swal-confirm-button' // Apply custom inline styles to the confirm button
+        }
+      });
+      return;
+    }
+
+    // Check if the post description, images, or videos are empty
+    if (!postDescription.trim() || postImages.length === 0 || postVideos.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please fill in all required fields (description, image, video).',
+        customClass: {
+          confirmButton: 'swal-confirm-button' // Apply custom inline styles to the confirm button
+        }
       });
       return;
     }
@@ -71,7 +100,10 @@ function AddPost() {
       Swal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Post created successfully!'
+        text: 'Post created successfully!',
+        customClass: {
+          confirmButton: 'swal-confirm-button' // Apply custom inline styles to the confirm button
+        }
       });
     } catch (error) {
       console.error('Error creating post:', error);
@@ -79,75 +111,104 @@ function AddPost() {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Failed to create post'
+        text: 'Failed to create post',
+        customClass: {
+          confirmButton: 'swal-confirm-button' // Apply custom inline styles to the confirm button
+        }
       });
     }
   };
 
   return (
-    <>
-      <div className="add-post-container">
-        <form onSubmit={handleSubmit} className="add-post-form">
-          <h1 className="add-post-title">Add Post</h1>
-          <div className="post-description">
-            <div className="input-group">
-              <label htmlFor="postDescription" className="input-label">Post Description:</label>
-              <input
-                id="postDescription"
-                type="text"
-                placeholder="Post Description"
-                value={postDescription}
-                onChange={handleDescriptionChange}
-                className="input-field"
-              />
-            </div>
-          </div>
-          <div className="add-images">
-            <div className="input-group">
-              <label htmlFor="imageInput" className="input-label">Add Images:</label>
-              <input
-                id="imageInput"
-                type="file"
-                multiple
-                accept="image/jpeg"
-                onChange={handleImageChange}
-                className="input-field"
-              />
-              <button type="button" className="choose-file-button" onClick={() => document.getElementById('imageInput').click()}>
-                <img src={uploadImg} alt="Upload" className="upload-icon" /> Choose File
-              </button>
-              {imageFileNames.length > 0 && (
-                <div className="selected-files">Selected Images: {imageFileNames.join(', ')}</div>
-              )}
-            </div>
-          </div>
-          <div className="add-videos">
-            <div className="input-group">
-              <label htmlFor="videoInput" className="input-label">Add Videos:</label>
-              <input
-                id="videoInput"
-                type="file"
-                multiple
-                accept="video/mp4"
-                onChange={handleVideoChange}
-                className="input-field"
-              />
-              <button type="button" className="choose-file-button" onClick={() => document.getElementById('videoInput').click()}>
-                <img src={uploadImg} alt="Upload" className="upload-icon" /> Choose File
-              </button>
-              {videoFileNames.length > 0 && (
-                <div className="selected-files">Selected Videos: {videoFileNames.join(', ')}</div>
-              )}
-            </div>
-          </div>
-          <div className="submit-buttons">
-            <button type="submit" className="submit-button">Add Post</button>
-            <a href="/viewPost" className="back-button">Back</a>
-          </div>
-          <div className="error-message">{error && <div>{error}</div>}</div>
-        </form>
-      </div>
-    </>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="sm">
+        <div className="add-post-container">
+          <Typography variant="h4" gutterBottom style={{ color: '#000' }}>Add Post</Typography>
+          <form onSubmit={handleSubmit} className="add-post-form">
+            <TextField
+              id="postDescription"
+              label="Post Description"
+              placeholder="Post Description"
+              value={postDescription}
+              onChange={handleDescriptionChange}
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              margin="normal"
+              InputProps={{
+                style: {
+                  borderColor: '#333', // Change outline color to dark grey
+                },
+                onFocus: (e) => {
+                  e.target.parentNode.style.borderColor = '#333'; // Change outline color to dark grey when focused
+                },
+                onBlur: (e) => {
+                  e.target.parentNode.style.borderColor = ''; // Reset outline color when focus is lost
+                },
+              }}
+            />
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <label htmlFor="imageInput">
+                  <IconButton color="primary" component="span">
+                    <MdAddAPhoto style={{ color: '#000' }} /> 
+                  </IconButton>
+                </label>
+                <input
+                  id="imageInput"
+                  type="file"
+                  multiple
+                  accept="image/jpeg"
+                  onChange={handleImageChange}
+                  style={{ display: 'none' }}
+                />
+                {imageFileNames.length > 0 && (
+                  <div className="selected-files">Selected Images: {imageFileNames.join(', ')}</div>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <label htmlFor="videoInput">
+                  <IconButton color="primary" component="span">
+                    <RiVideoAddFill style={{ color: '#000' }} /> 
+                  </IconButton>
+                </label>
+                <input
+                  id="videoInput"
+                  type="file"
+                  multiple
+                  accept="video/mp4"
+                  onChange={handleVideoChange}
+                  style={{ display: 'none' }}
+                />
+                {videoFileNames.length > 0 && (
+                  <div className="selected-files">Selected Videos: {videoFileNames.join(', ')}</div>
+                )}
+              </Grid>
+            </Grid>
+            <Button variant="contained" color="primary" type="submit" startIcon={<AddCircleOutline />} style={{ backgroundColor: '#000', color: '#fff', margin: '10px 0', borderRadius: '0', minWidth: '120px' }}>
+              Add Post
+            </Button>
+            <Button variant="outlined" color="primary" startIcon={<ArrowBack />} style={{ color: '#000', margin: '10px 10px 10px 0', borderRadius: '0', minWidth: '120px', borderColor: '#000' }}>Back</Button>
+            {error && <div className="error-message">{error}</div>}
+          </form>
+        </div>
+      </Container>
+      {/* Inline style tag for custom button styles */}
+      <style jsx>{`
+        .swal-confirm-button {
+          background-color: black !important;
+          color: white !important;
+          box-shadow: none !important; // Remove the default box-shadow
+        }
+
+        .swal-confirm-button:hover {
+          background-color: #555 !important; // Change this to the color you want on hover
+        }
+        
+      `}</style>
+    </ThemeProvider>
   );
 }
 

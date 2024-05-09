@@ -63,7 +63,7 @@ export default function NavigationBarB(props) {
                                 <li className="NavigationBarB nav-item">
                                     <a className="NavigationBarB nav-link" onClick={(e) => {
                                         e.preventDefault();
-                                        window.location.href = `/viewPost`
+                                        window.location.href = `/home`
                                     }}>HOME</a>
                                 </li>
                                 <li className="NavigationBarB nav-item">
@@ -110,4 +110,3 @@ export default function NavigationBarB(props) {
     );
     
 }    
-
