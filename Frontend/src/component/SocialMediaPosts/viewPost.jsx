@@ -7,7 +7,6 @@ import { Button, IconButton } from '@mui/material';
 import { Favorite, Chat, MoreVert } from '@mui/icons-material'; // Material-UI icons
 import './viewPostStyle.css';
 import Swal from 'sweetalert2';
-import viewPostbg from './Images/Bg4.mp4';
 
 function ViewPost() {
     const [posts, setPosts] = useState([]);
@@ -116,8 +115,73 @@ function ViewPost() {
     };
 
     const handleComment = (postId) => {
-        console.log('Commented on post with ID:', postId);
+        // Prompt the user to input a comment
+        Swal.fire({
+            title: 'Add Comment',
+            input: 'text',
+            inputPlaceholder: 'Enter your comment',
+            showCancelButton: true,
+            confirmButtonText: 'Add',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to enter a comment!';
+                }
+            },
+            width: '600px', // Increase popup width to accommodate the input text area
+            customClass: {
+                title: 'swal-title',
+                content: 'swal-content',
+                actions: 'swal-actions',
+                confirmButton: 'swal-confirm-button',
+                cancelButton: 'swal-cancel-button',
+                input: 'swal-input', // Apply custom style to the input text area
+            },
+            focusConfirm: false, // Remove the purple outline on focus
+            onOpen: () => {
+                const inputTextArea = document.querySelector('.swal-input');
+                
+                if (inputTextArea) {
+                    inputTextArea.style.width = '70%'; // Adjusted width to fit within container
+                    inputTextArea.style.maxWidth = '90%'; // Added max-width property to ensure responsiveness
+                }
+            }
+            
+            
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Add the comment
+                try {
+                    const res = await fetch(`http://localhost:8080/api/postComment/${postId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: 'user_id', // Replace 'user_id' with the actual user ID
+                            text: result.value
+                        })
+                    });
+                    if (res.ok) {
+                        // Reload comments
+                        fetchComments();
+                    } else {
+                        throw new Error('Failed to add comment');
+                    }
+                } catch (error) {
+                    console.error('Error adding comment:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to add comment',
+                        text: error.message
+                    });
+                }
+            }
+        });
     };
+    
+
 
     const handleEdit = (postId) => {
         setSelectedPostId(postId);
@@ -143,8 +207,14 @@ function ViewPost() {
                     console.error('Error editing post:', error);
                     Swal.showValidationMessage(`Edit failed: ${error}`);
                 }
+            },
+            // Customize style of the buttons
+            customClass: {
+                confirmButton: 'swal-edit-button',
+                cancelButton: 'swal-back-button'
             }
         }).then(async (result) => {
+            // Handle the result
             if (result.isConfirmed) {
                 // Redirect to the edit post component
                 if (result.value) {
@@ -202,7 +272,8 @@ function ViewPost() {
             {posts.map((post, postIndex) => (
                 <div key={post.id} className={`postContainer post-${post.id}`}>
                     <div className="postContent">
-                        <p>{post.postDescription}</p>
+                    <h5 style={{ fontFamily: 'Roboto' }}>{post.postDescription}</h5>
+
                         <Slider {...sliderSettings}>
                             {post.postImages.map((image, index) => (
                                 <div key={index} className={`postImage-${post.id}-${index}`}>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Bg5 from './Images/Bg5.jpg';
 
 function DeletePost({ postId, onDelete }) {
   const [error, setError] = useState(null);

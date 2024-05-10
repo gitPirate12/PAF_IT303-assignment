@@ -261,3 +261,23 @@
 }
 
 
+.swal-edit-button {
+    background-color: black !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important; 
+}
+
+.swal-back-button {
+    background-color: black !important;
+    color: white !important;
+    border: none !important;
+}
+
+.swal-input {
+    width: 90% !important; /* Adjusted width to fit within container */
+    max-width: 90% !important; /* Added max-width property to ensure responsiveness */
+}
+
+
+  

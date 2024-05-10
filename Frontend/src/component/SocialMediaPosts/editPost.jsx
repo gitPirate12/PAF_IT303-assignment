@@ -1,13 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useParams } from 'react-router-dom';
+import { TextField, Button, IconButton, Typography, Grid } from '@mui/material';
+import { MdAddAPhoto } from 'react-icons/md';
+import { RiVideoAddFill } from 'react-icons/ri';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import './editPost.css';
+import Bg5 from './Images/Bg5.jpg';
 
-
-
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#333', // Change this to the color you want
+    },
+  },
+});
 
 function EditPost() {
-  const { postId } = useParams();
+  const [postId, setPostId] = useState('');
   const [postDescription, setPostDescription] = useState('');
   const [imageFiles, setImageFiles] = useState([]);
   const [videoFile, setVideoFile] = useState(null);
@@ -16,37 +27,39 @@ function EditPost() {
   const [videoFileName, setVideoFileName] = useState('');
   const videoInputRef = useRef(null);
 
+  useEffect(() => {
+    // Apply background image to body when component mounts
+    document.body.style.backgroundImage = `url(${Bg5})`;
+    document.body.style.backgroundSize = '100% 140%';
+    document.body.style.backgroundPosition = 'center top';
+    document.body.style.backgroundRepeat = 'no-repeat';
+
+    // Clean up function to remove background image when component unmounts
+    return () => {
+      document.body.style.backgroundImage = '';
+    };
+  }, []);
+
+  useEffect(() => {
+    // Extract post ID from URL
+    const postIdFromURL = window.location.pathname.split('/')[2];
+    setPostId(postIdFromURL);
+  }, []);
+
   const handleDescriptionChange = (event) => {
     setPostDescription(event.target.value);
   };
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
-    const totalFiles = imageFiles.length + files.length;
-    if (totalFiles <= 3) {
-      setImageFiles([...imageFiles, ...files.slice(0, 3 - imageFiles.length)]);
-      const names = files.map(file => file.name);
-      setImageFileNames([...imageFileNames, ...names.slice(0, 3 - imageFileNames.length)]);
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'You can only upload a maximum of 3 images or videos.'
-      });
-    }
+    setImageFiles(files);
+    const names = files.map(file => file.name);
+    setImageFileNames(names);
   };
 
   const handleVideoChange = (event) => {
-    if (!videoFile) {
-      setVideoFile(event.target.files[0]);
-      setVideoFileName(event.target.files[0].name);
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'You can only upload one video.'
-      });
-    }
+    setVideoFile(event.target.files[0]);
+    setVideoFileName(event.target.files[0].name);
   };
 
   const handleSubmit = async (event) => {
@@ -54,7 +67,7 @@ function EditPost() {
 
     const formData = new FormData();
     formData.append('postDescription', postDescription);
-    imageFiles.forEach((file, index) => {
+    imageFiles.forEach(file => {
       formData.append('postImages', file);
     });
     if (videoFile) {
@@ -63,7 +76,7 @@ function EditPost() {
 
     try {
       const response = await axios.put(`http://localhost:8080/api/socialMediaPost/${postId}`, formData, {
-        withCredentials: true, // Include credentials (cookies) in the request
+        withCredentials: true,
       });
       console.log('Post updated:', response.data);
       setError(null);
@@ -83,91 +96,97 @@ function EditPost() {
     }
   };
 
-  const handleClickVideoButton = () => {
-    if (videoInputRef.current) {
-      videoInputRef.current.click();
-    }
+  const handleBackButtonClick = () => {
+    window.location.href = '/home'; // Redirect to '/home' route
   };
 
   return (
-    <>
-      
-      <div className="container">
-        <form onSubmit={handleSubmit} className="form">
-          <h1>Edit Post</h1>
-          <div className="row">
-            <div className="col-full">
-              <div className="form-group">
-                <div className="label-input-group">
-                  <label htmlFor="postDescription">Post Description:</label>
-                  <input
-                    id="postDescription"
-                    type="text"
-                    placeholder="Post Description"
-                    value={postDescription}
-                    onChange={handleDescriptionChange}
-                    className="input-field"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-half">
-              <div className="form-group">
-                <div className="label-input-group">
-                  <label htmlFor="imageInput">Add Images:</label>
-                  <input
-                    id="imageInput"
-                    type="file"
-                    multiple
-                    accept="image/jpeg"
-                    className="input-field1"
-                    onChange={handleImageChange}
-                    disabled={imageFiles.length >= 3}
-                  />
-                  <div className="file-name">{imageFileNames.length > 0 ? imageFileNames.join(', ') : 'No file chosen'}</div>
-                  <button type="button" className="custom-file-button1" onClick={() => document.getElementById('imageInput').click()} disabled={imageFiles.length >= 3}>
-                     Choose File
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="col-half">
-              <div className="form-group">
-                <div className="label-input-group">
-                  <label htmlFor="videoInput">Add Video:</label>
-                  <div className="file-name">{videoFileName ? videoFileName : 'No file chosen'}</div>
-                  <button type="button" className="custom-file-button2" onClick={handleClickVideoButton} disabled={videoFile}>
-                     Choose File
-                    <input
-                      ref={videoInputRef}
-                      id="videoInput"
-                      type="file"
-                      accept="video/mp4"
-                      className="input-field2"
-                      onChange={handleVideoChange}
-                      style={{ display: 'none' }}
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-full">
-              <div className="form-group" style={{ position: 'relative', top: '20px' }}>
-                <button type="submit" className="btn btn-primary">Update Post</button>
-              </div>
-              <div className="form-group" style={{ position: 'relative', top: '-33px', marginLeft: '115px' }}>
-                <a href="/viewPost" className="btn btn-danger">Back</a>
-              </div>
+    <ThemeProvider theme={theme}>
+      <Grid container justifyContent="center">
+        <Grid item xs={12} md={6}>
+          <div className="add-post-container">
+            <Typography variant="h4" gutterBottom style={{ color: '#000' }}>Edit Post</Typography>
+            <form onSubmit={handleSubmit} className="add-post-form">
+              <TextField
+                id="postDescription"
+                label="Post Description"
+                placeholder="Post Description"
+                value={postDescription}
+                onChange={handleDescriptionChange}
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
+                margin="normal"
+                InputProps={{
+                  style: {
+                    borderColor: '#333',
+                  },
+                  onFocus: (e) => {
+                    e.target.parentNode.style.borderColor = '#333';
+                  },
+                  onBlur: (e) => {
+                    e.target.parentNode.style.borderColor = '';
+                  },
+                }}
+              />
+              <label htmlFor="imageInput">
+                <IconButton color="primary" component="span">
+                  <MdAddAPhoto style={{ color: '#000' }} /> 
+                </IconButton>
+              </label>
+              <input
+                id="imageInput"
+                type="file"
+                multiple
+                accept="image/jpeg"
+                onChange={handleImageChange}
+                style={{ display: 'none' }}
+              />
+              {imageFileNames.length > 0 && (
+                <div className="selected-files">Selected Images: {imageFileNames.length > 0 && (
+                  <Typography variant="body1" style={{ fontFamily: 'Roboto' }}>
+                    Selected Images: {imageFileNames.join(', ')}
+                  </Typography>
+                )}</div>
+              )}
+              <label htmlFor="videoInput">
+                <IconButton color="primary" component="span">
+                  <RiVideoAddFill style={{ color: '#000' }} /> 
+                </IconButton>
+              </label>
+              <input
+                id="videoInput"
+                type="file"
+                accept="video/mp4"
+                onChange={handleVideoChange}
+                style={{ display: 'none' }}
+              />
+              {videoFileName && (
+                <div className="selected-files">Selected Video: {videoFileName}</div>
+              )}
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                style={{ backgroundColor: '#000', color: '#fff', margin: '10px 0', borderRadius: '0', minWidth: '120px' }}
+              >
+                Update Post
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleBackButtonClick}
+                style={{ color: '#000', margin: '10px 10px 10px 0', borderRadius: '0', minWidth: '120px', borderColor: '#000' }}
+              >
+                Back
+              </Button>
               {error && <div className="error-message">{error}</div>}
-            </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 }
 
